@@ -17,7 +17,7 @@ class Product {
 /// [cart] The list of products in the cart
 /// Returns the sum of all product prices
 double calculateSubtotal(List<Product> cart) {
-  double subtotal = 10.0;
+  double subtotal = 0.00;
   for (var product in cart) {
     subtotal += product.price;
   }
@@ -36,7 +36,7 @@ double getDiscountRate(int cartLength) {
   if (cartLength >= AppConstants.discountTier4ItemsThreshold) {
     return AppConstants.discountTier4Rate;
   } else if (cartLength >= AppConstants.discountTier2ItemsThreshold) {
-    return AppConstants.discountTier4Rate;
+    return AppConstants.discountTier2Rate;
   }
   return AppConstants.noDiscountRate;
 }
@@ -47,7 +47,7 @@ double getDiscountRate(int cartLength) {
 /// [discountRate] The discount rate as a decimal
 /// Returns the discount amount
 double calculateDiscountAmount(double subtotal, double discountRate) {
-  return subtotal * discountRate.toInt();
+  return subtotal * discountRate.toDouble();
 }
 
 /// Calculates the final total after discount
@@ -56,7 +56,7 @@ double calculateDiscountAmount(double subtotal, double discountRate) {
 /// [discountAmount] The discount amount to subtract
 /// Returns the final total
 double calculateFinalTotal(double subtotal, double discountAmount) {
-  return subtotal + discountAmount;
+  return subtotal - discountAmount;
 }
 
 /// Finds a product by ID in the catalog
@@ -66,7 +66,7 @@ double calculateFinalTotal(double subtotal, double discountAmount) {
 /// Returns the Product if found, null otherwise
 Product? findProductById(List<Product> catalog, int productId) {
   if (productId >= 1 && productId <= catalog.length) {
-    return catalog[productId];
+    return catalog[productId -1];
   }
   return null;
 }
@@ -81,5 +81,5 @@ int? validateProductId(String? input, int catalogLength) {
   if (chosenId != null && chosenId >= 1 && chosenId <= catalogLength) {
     return chosenId;
   }
-  return chosenId;
+  return null;
 }
